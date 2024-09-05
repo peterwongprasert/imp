@@ -103,3 +103,4 @@
 /Applications/MAMP/angular/imp-backend/ImpApi/obj/Debug/net8.0/ImpApi.pdb
 /Applications/MAMP/angular/imp-backend/ImpApi/obj/Debug/net8.0/ImpApi.genruntimeconfig.cache
 /Applications/MAMP/angular/imp-backend/ImpApi/obj/Debug/net8.0/ref/ImpApi.dll
+/Applications/MAMP/angular/imp-backend/ImpApi/obj/Debug/net8.0/ImpApi.sourcelink.json

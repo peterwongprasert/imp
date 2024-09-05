@@ -7,11 +7,13 @@ namespace ImpApi.Models
   {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-    public DbSet<Post> Posts { get; set; }
-
-    public DbSet<Recipe> Recipe { get; set; }
-
+    // public DbSet<Post> Posts { get; set; }
     public DbSet<User> User { get; set; }
+    public DbSet<Ingredient> Ingredient { get; set; }
+    public DbSet<Recipe> Recipe { get; set; }
+    public DbSet<RecipeIngredient> RecipeIngredient { get; set; }
+    public DbSet<Like> Like { get; set; }
+    public DbSet<Save> Save { get; set; }
 
         // linking keys
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,19 +26,19 @@ namespace ImpApi.Models
 
             modelBuilder.Entity<RecipeIngredient>()
               .HasOne(ri => ri.Recipe)
-              .WithMany(i => i.RecipeIngredients)
+              .WithMany(i => i.RecipeIngredient)
               .HasForeignKey(ri => ri.RecipeId);
 
             modelBuilder.Entity<RecipeIngredient>()
               .HasOne(ri => ri.Ingredient)
-              .WithMany(i => i.RecipeIngredients)
+              .WithMany(i => i.RecipeIngredient)
               .HasForeignKey(i => i.IngredientId);
             
             // 1:M
             modelBuilder.Entity<Recipe>()
               .HasOne(r => r.User)
               .WithMany(u => u.Recipes)
-              .HasForeignKey(r => r.Id);
+              .HasForeignKey(r => r.UserId);
 
             
             // M:N

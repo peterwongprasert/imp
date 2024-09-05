@@ -9,11 +9,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // add in =======================================================
+builder.Services.AddControllers();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
     new MySqlServerVersion(new Version(8, 0, 23))));
 
-builder.Services.AddControllers();
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("AllowAngularApp",
+        policy => 
+        {
+            // policy.AllowAnyOrigin()
+            policy.WithOrigins("http://localhost:8100")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 // end of add in ================================================
 
 var app = builder.Build();
@@ -24,10 +36,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else // added else block
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
 
 // add in =======================================================
+app.UseCors("AllowAngularApp");
+
 app.UseRouting();
 
 app.UseAuthorization();
